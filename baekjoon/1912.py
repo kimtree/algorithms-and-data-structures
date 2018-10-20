@@ -2,15 +2,16 @@
 import sys
 
 count = int(sys.stdin.readline())
-result = [0] * (count+1)
 
 numbers = list(map(int, sys.stdin.readline().split()))
+result = [0] * count
+result[0] = numbers[0]
 
-for i, number in enumerate(numbers):
-    for idx in range(i, count):
-        if result[i] < result[i] + numbers[idx]:
-            result[i] += numbers[idx]
-        else:
-            break
+if count == 1:
+    print(numbers[0])
+else:
+    for idx in range(1, count):
+        result[idx] = max(result[idx-1] + numbers[idx], numbers[idx])
 
-print(max(result))
+    print(result)
+    print(max(result))
