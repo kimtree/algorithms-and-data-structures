@@ -15,10 +15,11 @@ def dfs(graph, start):
         if node not in visited:
             visited.append(node)
 
-            children_node = list(set(graph[node]) - set(visited))
-            children_node.sort()
+            if node in graph:
+                children_node = list(set(graph[node]) - set(visited))
+                children_node.sort()
 
-            stack.extendleft(reversed(children_node))
+                stack.extendleft(reversed(children_node))
 
     return visited
 
@@ -33,10 +34,11 @@ def bfs(graph, start):
         if node not in visited:
             visited.append(node)
 
-            children_node = list(set(graph[node]) - set(visited))
-            children_node.sort()
+            if node in graph:
+                children_node = list(set(graph[node]) - set(visited))
+                children_node.sort()
 
-            stack.extend(children_node)
+                stack.extend(children_node)
 
     return visited
 
@@ -48,18 +50,18 @@ for _ in range(int(tmp[1])):
     edge_from = int(edge_str[0])
     edge_to = int(edge_str[1])
 
-    if int(tmp[0]) < edge_from or int(tmp[0]) < edge_to:
-        continue
-
     if edge_from not in graph:
         graph[edge_from] = [edge_to]
-    elif edge_to not in graph[edge_from]:
+    else:
         graph[edge_from].append(edge_to)
+        graph[edge_from].sort()
 
     if edge_to not in graph:
         graph[edge_to] = [edge_from]
-    elif edge_from not in graph[edge_to]:
+    else:
         graph[edge_to].append(edge_from)
+        graph[edge_to].sort()
+
 
 path = dfs(graph, int(tmp[2]))
 for p in path:
